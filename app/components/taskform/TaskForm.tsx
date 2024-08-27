@@ -21,7 +21,8 @@ export const TaskForm = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await createTask(task)
+     await createTask(task)
+  
     // const res = await createTaskRequest(task)
     // const data = await res.json()
   }

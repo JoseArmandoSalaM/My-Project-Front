@@ -1,6 +1,7 @@
-import { useState } from "react";
+
 import { create } from "zustand";
 import { createTaskRequest, deleteTaskRequest, getTaskRequest, updateTasksRequets } from "../api/tasks";
+
 
 const API = 'http://localhost:4000/api';
 
@@ -25,6 +26,7 @@ interface Post {
     updateTask: (id: string,task:UpdateTasks) => Promise<void>
 }
 
+
 export const tasksStore = create<Post>((set) => ({
     tasks:[],
     getPosts: async () => {
@@ -43,8 +45,11 @@ export const tasksStore = create<Post>((set) => ({
             const data = await res.json()
             set((state) => ({ tasks: [...state.tasks, data] }));
             return;
-         }
-        console.log('Already exits task that this title');
+         }else if (res.status === 409) {
+          alert('Tasks already exists')
+          } else {
+            console.error('Error creating task:', res);
+          }
 
     },
 
@@ -62,5 +67,5 @@ export const tasksStore = create<Post>((set) => ({
       tasks: state.tasks.map(task => task.id === id ? { ...task, ...data } : task),
     }));
     }
-
 }))
+
