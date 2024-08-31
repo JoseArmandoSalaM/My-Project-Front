@@ -1,7 +1,8 @@
 "use client"; 
-import {TaskItem} from '@/app/components/tasklist/TaskItem'
+
 import { tasksStore } from '@/app/store/tasksStore';
 import { useEffect } from 'react';
+import { TaskItem } from './TaskItem';
 
 
 export const TaskList = () => {
