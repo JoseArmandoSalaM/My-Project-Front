@@ -1,17 +1,28 @@
-'use client';
+"use client";
 import Link from "next/link";
-import { IoAccessibility,IoShirtOutline } from "react-icons/io5"
+
 
 import clsx from "clsx";
-import { GrRestroomWomen } from "react-icons/gr";
-import { BiSolidOffer } from "react-icons/bi";
-import { FaHome, FaTasks } from "react-icons/fa";
+
 import { useUIStore } from "@/app/store/ui-store";
 import { MdCancel } from "react-icons/md";
 import { logout } from "@/app/actions";
 import { CiLogin, CiLogout } from "react-icons/ci";
 
-export const Sidebar = () => {
+import { useSession } from "next-auth/react";
+import { FaTasks } from "react-icons/fa";
+
+export const Sidebar =  () => {
+
+   const onLogout = async () => {
+      await logout();
+      window.location.replace('/')
+    }
+ 
+   const { data: session} = useSession();
+
+   const isAuthenticated = !!session?.user;
+
 
    const isSideMenuOpen = useUIStore(state => state.isSideMenuOpen);
    const closeMenu = useUIStore(state => state.closeSideMenu);
@@ -68,6 +79,23 @@ export const Sidebar = () => {
                <span className="ml-3 text-sm">Tasks</span>
             </Link>
 
+            {isAuthenticated && (
+
+            <button
+            onClick={() => {
+               onLogout();
+               closeMenu();
+           }}
+               className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
+            >
+               <CiLogout size={20} />
+               <span className="ml-3 text-sm">Logout</span>
+            </button>
+          
+            )}
+
+          {
+            !isAuthenticated && (
             <Link 
             onClick={()=> closeMenu()}
             href="/auth"
@@ -76,14 +104,9 @@ export const Sidebar = () => {
            <CiLogin size={20} />
            <span className="ml-3 text-sm">Login</span>
             </Link>
+            )
+          }
 
-            <button
-               onClick={() => logout()}
-               className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
-            >
-               <CiLogout size={20} />
-               <span className="ml-3 text-sm">Logout</span>
-            </button>
 
            
      

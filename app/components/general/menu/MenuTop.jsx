@@ -8,9 +8,14 @@ import { IoMenu } from "react-icons/io5";
 import { useUIStore } from '@/app/store/ui-store';
 
 import { logout } from '@/app/actions';
+import { useSession } from 'next-auth/react';
+
 
 
 export const MenuTop = () =>  {
+
+  const { data: session} = useSession();
+  const isAuthenticated = !!session?.user;
    
     const  openSideMenu = useUIStore(state => state.openSideMenu);
 
@@ -32,13 +37,23 @@ export const MenuTop = () =>  {
             Tasks
           </Link>
 
-          <Link href="/auth" className="hover:text-primary-foreground">
-          Login
-          </Link>
-
+          {
+            isAuthenticated && (
           <button onClick={() => logout()} className="hover:text-primary-foreground">
           Logout
           </button>
+            )
+          }
+
+          {
+            !isAuthenticated && (
+          <Link href="/auth" className="hover:text-primary-foreground">
+          Login
+          </Link>
+            )
+          }
+
+
          
 
         </div>

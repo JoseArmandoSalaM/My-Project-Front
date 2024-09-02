@@ -1,11 +1,11 @@
 'use client';
-
-
-
+import { authenticate, login } from '@/app/actions';
+import { createUser } from '@/app/api/login';
 import clsx from 'clsx';
 import Link from 'next/link'
 import React, { useState } from 'react'
-
+import { useFormState } from 'react-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 
 type FormInputs = {
@@ -17,21 +17,26 @@ type FormInputs = {
 export const RegisterForm = () => {
 
 
+ 
+  const [state, dispatch] = useFormState(
+    authenticate,
+    undefined
+  );
 
+  
   const [errorMessage, setErrorMessage] = useState('')
   const {register, handleSubmit, formState:{errors}} = useForm<FormInputs>();
 
     const onSubmit: SubmitHandler<FormInputs> = async(data) =>{
-        setErrorMessage('');
-        const {name, email, password} = data;
+
 
         //server actions
-        const resp = await registerUser(name, email, password);
+        const resp = await createUser(data);
 
-        if(!resp.ok){
-          setErrorMessage(resp.message);
-          return;
-        }
+        if(!resp.ok) return <p>faile to create user</p>
+
+
+        const {name, email, password} = data;
 
         await login(email.toLowerCase(), password);
         window.location.replace('/');
@@ -39,9 +44,12 @@ export const RegisterForm = () => {
 
     }
 
+ 
+
+
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+    <form onSubmit={handleSubmit(onSubmit)}  className="flex flex-col">
 
 
         <label htmlFor="email">Nombre completo</label>
@@ -55,8 +63,8 @@ export const RegisterForm = () => {
             )
           }
           type="text" 
+          {...register('name', {required: true })}
           autoFocus
-          {...register('name', {required: true})}
           />
 
       <label htmlFor="email">Correo electronico</label>
@@ -85,7 +93,7 @@ export const RegisterForm = () => {
             )
           }
           type="password"
-          {...register('password', {required: true})}
+          {...register('password', {required: true, minLength:6})}
           />
 
           <span className='text-red-500'>{errorMessage}</span>

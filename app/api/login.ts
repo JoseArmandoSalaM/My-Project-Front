@@ -4,10 +4,10 @@ const API = 'http://localhost:4000/api';
 
 
 
-export const createTaskRequest = (task:CreateTask) => 
+export const createUser = (credentials: {name: string, email: string, password: string}) => 
     fetch(`${API}/auth`,{
         method: 'POST',
-        body: JSON.stringify(task),
+        body: JSON.stringify(credentials),
         headers: {
             'Content-Type': 'application/json'
         }

@@ -2,8 +2,8 @@
 
 import { authenticate } from "@/app/actions";
 import clsx from "clsx";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useEffect } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { IoInformationOutline } from "react-icons/io5";
 
@@ -14,6 +14,14 @@ export const LoginForm = () => {
         authenticate,
         undefined,
       );
+
+      useEffect(() =>{
+        if(state === 'Success'){
+          // router.replace('/');
+          window.location.replace('/');
+        
+        }
+      },[state])
 
 
 

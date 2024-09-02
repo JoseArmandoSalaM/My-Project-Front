@@ -10,7 +10,12 @@ export async function authenticate(
   formData: FormData,
 ) {
   try {
-    await signIn('credentials', formData);
+    await signIn('credentials', {
+      ...Object.fromEntries(formData),
+      redirect: false,
+    });
+
+    return 'Success';
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -22,4 +27,27 @@ export async function authenticate(
     }
     throw error;
   }
+}
+
+
+export const login = async(email: string, password: string) => {
+  try {
+    await signIn('credentials', {email, password})
+
+    return {
+      ok: true
+    }
+
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
+  }
+
 }
