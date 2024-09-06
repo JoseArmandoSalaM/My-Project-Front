@@ -31,7 +31,6 @@ export const authConfig: NextAuthConfig = {
         
                 if (user.error) throw user;
 
-               
                 return user;
             },
         }),

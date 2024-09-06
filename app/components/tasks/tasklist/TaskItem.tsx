@@ -1,3 +1,4 @@
+"use client";
 
 import { Tasks } from "@/app/interface";
 import { tasksStore } from "@/app/store/tasksStore";

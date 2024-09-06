@@ -13,7 +13,7 @@ export const createTaskRequest = (task:CreateTask) =>
     });
 
 
-export const getTaskRequest = () => fetch(`${API}/tasks`)
+export const getTaskRequest = (token: string) => fetch(`${API}/tasks`)
 
 export const deleteTaskRequest = (id: string) => fetch(`${API}/tasks/${id}`,{
     method: "DELETE",

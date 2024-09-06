@@ -3,9 +3,8 @@ import React from 'react'
 import { auth } from "../../auth.config";
 import { redirect } from 'next/navigation';
 import { MenuTop, Sidebar } from '@/app/components';
-import { InfoProfile } from '@/app/components/profile/InfoProfile';
 
-export default async function profile(){
+export default async function pedidos(){
 
   const session = await auth(); 
 
@@ -18,9 +17,6 @@ export default async function profile(){
     <div>
       <MenuTop/>
       <Sidebar/>
-
-      <InfoProfile/>
-
 
     </div>
   )

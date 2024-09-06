@@ -1,6 +1,7 @@
 
 import { create } from "zustand";
 import { createTaskRequest, deleteTaskRequest, getTaskRequest, updateTasksRequets } from "../api/tasks";
+import { auth } from "../auth.config";
 
 
 const API = 'http://localhost:4000/api';
@@ -18,6 +19,7 @@ type createtask = Omit<Tasks,'id' | 'createAt' | 'updateAt'>
 type UpdateTasks = Partial<createtask>
 
 
+
 interface Post {
     tasks: Tasks[],
     getPosts: () => Promise<void>
@@ -25,7 +27,6 @@ interface Post {
     deleteTask: (id: string) => Promise<void>
     updateTask: (id: string,task:UpdateTasks) => Promise<void>
 }
-
 
 export const tasksStore = create<Post>((set) => ({
     tasks:[],

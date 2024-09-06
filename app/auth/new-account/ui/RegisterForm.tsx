@@ -16,13 +16,6 @@ type FormInputs = {
 
 export const RegisterForm = () => {
 
-
- 
-  const [state, dispatch] = useFormState(
-    authenticate,
-    undefined
-  );
-
   
   const [errorMessage, setErrorMessage] = useState('')
   const {register, handleSubmit, formState:{errors}} = useForm<FormInputs>();

@@ -1,5 +1,5 @@
-import { cookies } from "next/headers";
-import {CreateTask, Login, UpdateTasks} from "../interface";
+
+import { FormInputs } from "../components/profile/Profile";
 const API = 'http://localhost:4000/api';
 
 
@@ -31,4 +31,21 @@ export async function profile(token: string) {
       'Authorization': `Bearer ${token}`,
     },
   });
+}
+
+export async function updateProfile(id:string,token:string,name: string, email: string) {
+  console.log(name, email)
+  const data = {
+    name,
+    email
+  };
+  return await fetch(`${API}/auth/${id}`,{
+    method: 'PATCH',
+    headers:{
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data),
+  });
+  
 }

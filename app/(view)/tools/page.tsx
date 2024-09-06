@@ -1,8 +1,9 @@
 import React from 'react'
-import {MenuTop, Sidebar,TaskForm,TaskList} from '@/app/components'
+import {MenuTop, Sidebar} from '@/app/components'
 
 import { auth } from "../../auth.config";
 import { redirect } from 'next/navigation';
+import TableTools from '@/app/components/tools/TableTools';
 
 export default async function Tasks(){
 
@@ -17,13 +18,11 @@ export default async function Tasks(){
     <div>
       <MenuTop/>
       <Sidebar/>
-    <div className='h-screen flex items-center justify-center'>
-       <div className='w-2/5'>
-        <TaskForm/>
-        <TaskList/>
-       </div>
+    
+      <TableTools/>
+
 
     </div>
-    </div>
+
   )
 }

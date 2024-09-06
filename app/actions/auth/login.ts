@@ -49,5 +49,9 @@ export const login = async(email: string, password: string) => {
     }
     throw error;
   }
+}
 
+export const update = async(name: string, email: string) => {
+
+  console.log(name, email)
 }

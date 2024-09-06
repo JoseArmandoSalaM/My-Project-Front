@@ -1,28 +1,45 @@
-"use client"; 
-
 import { tasksStore } from '@/app/store/tasksStore';
 import { useEffect } from 'react';
 import { TaskItem } from './TaskItem';
+import { getTaskRequest } from '@/app/api/tasks';
+import { auth } from '@/app/auth.config';
 
 
-export const TaskList = () => {
+interface Task {
+  id: string;
+  title: string;
+  description: string;
+  done: boolean;
+}
+
+
+export const TaskList = async () => {
 // const {tasks} = useTasks()
 
-  const {getPosts,tasks} = tasksStore()
+const session = await auth()
+const token = session?.user.token;
 
-   useEffect(()=>{
-     getPosts()
-   },[]);
+let tasks: Task[] = [];
+
+ try {
+  if(token !== undefined){
+    const res = await getTaskRequest(token);
+    tasks = await res.json();
+  }
+ } catch (error) {
+  console.error(error);
+ }
+  
 
 
 
   return (
     <div className='mt-2'>
-      {
-        tasks.map(task => (
-          <TaskItem task={task} key={task.id}/ > 
-        ))
-      }
+      {tasks && tasks.length > 0 ? (
+        tasks.map((task: Task) => <TaskItem task={task} key={task.id} />)
+      ) : (
+        <p>No puedes ver las tareas</p>
+      )}
     </div>
   )
 }

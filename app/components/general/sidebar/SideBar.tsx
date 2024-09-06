@@ -7,10 +7,11 @@ import clsx from "clsx";
 import { useUIStore } from "@/app/store/ui-store";
 import { MdCancel } from "react-icons/md";
 import { logout } from "@/app/actions";
-import { CiLogin, CiLogout } from "react-icons/ci";
+import { CiLogin, CiLogout, CiShoppingTag } from "react-icons/ci";
 
 import { useSession } from "next-auth/react";
 import { FaTasks } from "react-icons/fa";
+import { useEffect } from "react";
 
 export const Sidebar =  () => {
 
@@ -20,10 +21,8 @@ export const Sidebar =  () => {
     }
  
    const { data: session} = useSession();
-
    const isAuthenticated = !!session?.user;
-
-
+    
    const isSideMenuOpen = useUIStore(state => state.isSideMenuOpen);
    const closeMenu = useUIStore(state => state.closeSideMenu);
 
@@ -77,6 +76,15 @@ export const Sidebar =  () => {
             >
                <FaTasks size={20} />
                <span className="ml-3 text-sm">Tasks</span>
+            </Link>
+
+            <Link
+               onClick={() => closeMenu()}
+               href="/pedidos"
+               className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
+            >
+               <CiShoppingTag size={20} />
+               <span className="ml-3 text-sm">Pedidos</span>
             </Link>
 
             {isAuthenticated && (
