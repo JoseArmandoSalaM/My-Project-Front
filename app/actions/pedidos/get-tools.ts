@@ -24,3 +24,30 @@ export const getTools = async () => {
 
    
 }
+
+export const getToolsById = async (id: string) => {
+
+    try {
+        const session = await auth()
+        const token = session?.user.token;
+    
+    
+        const tools = await fetch(`${API}/tools/${id}`,{
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
+        if(!tools) return null;
+    
+        const tool = await tools.json(); 
+    
+        return {
+            ...tool
+        }
+        
+    } catch (error) {
+       return {}
+    }
+}

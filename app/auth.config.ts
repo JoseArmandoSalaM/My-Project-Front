@@ -3,6 +3,7 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
  
 export const authConfig: NextAuthConfig = {
+
     pages: {
         signIn: '/auth',
         newUser: '/auth/new-account',

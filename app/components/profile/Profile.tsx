@@ -5,8 +5,7 @@ import { UserProfile } from "@/app/interface/userProfile";
 import { DateTime } from "next-auth/providers/kakao";
 import { useForm } from "react-hook-form";
 
-export interface FormInputs{
-  
+export interface FormInputs{ 
     name: string;
     email: string;
 }
